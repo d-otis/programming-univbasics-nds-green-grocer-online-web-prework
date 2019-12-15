@@ -20,8 +20,6 @@ def find_item_by_name_in_collection(name, collection)
 end
 
 def consolidate_cart(cart)
-  # Consult README for inputs and outputs
-  #
   # REMEMBER: This returns a new Array that represents the cart. Don't merely
   # change `cart` (i.e. mutate) it. It's easier to return a new thing.
     #   * Arguments:
@@ -32,26 +30,12 @@ def consolidate_cart(cart)
     #     * Every item's `:count` will be _at least_ one
     #     * Where multiple instances of a given item are seen, the instance in the
     #       new `Array` will have its `:count` increased
+  
   i = 0
   result = []
   while i < cart.length do
-    current_name = cart[i][:item]
-    if result.empty? # if cart is empty
-      result << cart[i] # just add the item
-      result[i][:count] = 1
-    else # if the cart isn't empty do the following ...
-      r = 0
-      while r < result.length do
-        if result[r][:item] == current_name #if the current_name is the same as the [r] 
-          result[r][:count] += 1 # then add one
-        else
-          result << cart[i]
-        end
-        r += 1
-      end
-    end
+    current_item = cart[i][:item]
     binding.pry
-  i += 1
   end
 end
 
