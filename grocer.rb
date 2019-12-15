@@ -43,8 +43,10 @@ def consolidate_cart(cart)
     r = 0
     while r < result.length do
     
+      r += 1
     end
     binding.pry
+  i += 1  
   end
   
 end
