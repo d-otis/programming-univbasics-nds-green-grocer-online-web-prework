@@ -1,3 +1,5 @@
+require 'pry'
+
 def find_item_by_name_in_collection(name, collection)
   # Implement me first!
   # * Arguments:
@@ -8,6 +10,17 @@ def find_item_by_name_in_collection(name, collection)
   #   * the matching `Hash` if a match is found between the desired name and a given 
   #     `Hash`'s :item key
   
+  i = 0
+  results = {}
+  while i < collection.length do
+    if collection[i][:item] == name
+      collection[i]
+    else
+      nil
+    end
+    i += 1
+  end
+  binding.pry
 end
 
 def consolidate_cart(cart)
