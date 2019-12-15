@@ -1,7 +1,13 @@
 def find_item_by_name_in_collection(name, collection)
   # Implement me first!
-  #
-  # Consult README for inputs and outputs
+  # * Arguments:
+  #   * `String`: name of the item to find
+  #   * `Array`: a collection of items to search through
+  # * Returns:
+  #   * `nil` if no match is found
+  #   * the matching `Hash` if a match is found between the desired name and a given 
+  #     `Hash`'s :item key
+  
 end
 
 def consolidate_cart(cart)
