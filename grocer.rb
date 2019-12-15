@@ -61,11 +61,12 @@ def apply_coupons(cart, coupons)
   #     described below.
   consolidated_cart = consolidate_cart(cart)
   coupon_index = 0
+  
   while coupon_index < coupons.length do
-    coupon_name = coupons[coupon_index][:item]
-    cart_item = find_item_by_name_in_collection(coupon_name, consolidated_cart)[:item]
-    if cart_item == coupon_name #if both items exist
-      msg = "We have a match" #compare the num reqs of the coupon with cart#
+    coupon = coupons[coupon_index]
+    cart_item = find_item_by_name_in_collection(coupon[:item], consolidated_cart)
+    if cart_item[:item] == coupon[:item] #if both items exist
+      msg = 'we have a match'
     else
       msg = "No match"
     end
