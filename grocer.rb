@@ -10,18 +10,13 @@ def find_item_by_name_in_collection(name, collection)
   #   * the matching `Hash` if a match is found between the desired name and a given 
   #     `Hash`'s :item key
   i = 0
-  # results = {}
   while i < collection.length do
-    results = {}
     if collection[i][:item] == name
-      results[:item] = collection[i][:item]
-      binding.pry
-      results
-    else
-      nil
+      return collection[i]
     end
     i += 1
   end
+  nil
 end
 
 def consolidate_cart(cart)
