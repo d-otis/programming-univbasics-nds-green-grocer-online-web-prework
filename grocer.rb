@@ -34,26 +34,25 @@ def consolidate_cart(cart)
     #       new `Array` will have its `:count` increased
   i = 0
   result = []
-  while i < cart.length
-    current_hash = cart[i]
-    current_hash[:count] = 1
+  while i < cart.length do
     current_name = cart[i][:item]
-    if result.empty?
-      result << current_hash
-    end
-    r = 0
-    while r < result.length do
-      binding.pry
-      if result[r][:item] == current_name
-        result[r][:count] += 1
-      else
-        result << current_hash
+    if result.empty? # if cart is empty
+      result << cart[i] # just add the item
+      result[i][:count] = 1
+    else # if the cart isn't empty do the following ...
+      r = 0
+      while r < result.length do
+        if result[r][:count] == current_name #if the current_name is the same as the [r] 
+          result[r][:count] += 1 # then add one
+        else
+          result << cart[i]
+        end
+        r += 1
       end
-      r += 1
     end
-    i += 1  
+    binding.pry
+  i += 1
   end
-  
 end
 
 def apply_coupons(cart, coupons)
