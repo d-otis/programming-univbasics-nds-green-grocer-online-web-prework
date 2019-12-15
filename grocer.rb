@@ -24,6 +24,32 @@ def consolidate_cart(cart)
   #
   # REMEMBER: This returns a new Array that represents the cart. Don't merely
   # change `cart` (i.e. mutate) it. It's easier to return a new thing.
+    #   * Arguments:
+    #   * `Array`: a collection of item Hashes
+    # * Returns:
+    #   * a ***new*** `Array` where every ***unique*** item in the original is present
+    #     * Every item in this new `Array` should have a `:count` attribute
+    #     * Every item's `:count` will be _at least_ one
+    #     * Where multiple instances of a given item are seen, the instance in the
+    #       new `Array` will have its `:count` increased
+  i = 0
+  result = []
+  while i < cart.length do
+    r_i = 0
+    # binding.pry
+    while r_i < result.size do
+      if !result[r_i][:item]
+        result[r_i] = cart[i]
+      else
+        result[r_i][:count] += 1
+      end
+      # binding.pry
+      r_i += 1
+    end
+    i += 1
+    result
+  end
+  
 end
 
 def apply_coupons(cart, coupons)
