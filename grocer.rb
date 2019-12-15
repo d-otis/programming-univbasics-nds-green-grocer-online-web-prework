@@ -59,7 +59,19 @@ def apply_coupons(cart, coupons)
   #   * A ***new*** `Array`. Its members will be a mix of the item `Hash`es and,
   #     where applicable, the "ITEM W/COUPON" `Hash`. Rules for application are
   #     described below.
-  
+  consolidated_cart = consolidate_cart(cart)
+  coupon_index = 0
+  while coupon_index < coupons.length do
+    coupon_name = coupons[coupon_index][:item]
+    cart_item = find_item_by_name_in_collection(coupon_name, consolidated_cart)[:item]
+    if cart_item == coupon_name #if both items exist
+      msg = "We have a match" #compare the num reqs of the coupon with cart#
+    else
+      msg = "No match"
+    end
+    binding.pry
+    coupon_index += 1
+  end
 end
 
 def apply_clearance(cart)
