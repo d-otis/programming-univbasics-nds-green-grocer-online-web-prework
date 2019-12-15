@@ -30,19 +30,36 @@ def consolidate_cart(cart)
     #     * Every item's `:count` will be _at least_ one
     #     * Where multiple instances of a given item are seen, the instance in the
     #       new `Array` will have its `:count` increased
-  
   i = 0
   result = []
   while i < cart.length do
-    current_item = cart[i][:item]
-    binding.pry
+    name = cart[i][:item]
+    cart[i][:count] = 1
+    if result.empty?
+      result << cart[i]
+    elsif find_item_by_name_in_collection(name, result)
+      repeat_item = find_item_by_name_in_collection(name, result)
+      repeat_item[:count] += 1
+    else
+      result << cart[i]
+    end
+  i += 1
   end
+ result
 end
 
 def apply_coupons(cart, coupons)
   # Consult README for inputs and outputs
   #
   # REMEMBER: This method **should** update cart
+  #   * Arguments:
+  #   * `Array`: a collection of item `Hash`es
+  #   * `Array`: a collection of coupon `Hash`es
+  # * Returns:
+  #   * A ***new*** `Array`. Its members will be a mix of the item `Hash`es and,
+  #     where applicable, the "ITEM W/COUPON" `Hash`. Rules for application are
+  #     described below.
+  
 end
 
 def apply_clearance(cart)
