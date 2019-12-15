@@ -61,18 +61,33 @@ def apply_coupons(cart, coupons)
   #     described below.
   consolidated_cart = consolidate_cart(cart)
   coupon_index = 0
-  
+  updated_cart = []
   while coupon_index < coupons.length do
-    coupon = coupons[coupon_index]
-    cart_item = find_item_by_name_in_collection(coupon[:item], consolidated_cart)
-    if cart_item[:item] == coupon[:item] #if both items exist
-      msg = 'we have a match'
+    coupon_name = coupons[coupon_index][:item]
+    coupon_number = coupons[coupon_index][:num]
+    found_item = find_item_by_name_in_collection(coupon_name, consolidated_cart)
+    found_item_name = found_item[:item]
+    found_item_count = found_item[:count]
+    if found_item_name == coupon_name
+      if coupon_number <= found_item_count
+        msg = "coupon can be applied"
+        leftover_in_cart = found_item_count - coupon_number
+        if leftover_in_cart != 0
+          found_item[:count] = leftover_in_cart
+        end
+        found_item[:price] = found_item_count / coupon_number
+        updated_cart << found_item
+      else
+        updated_cart << found_item
+      end
     else
-      msg = "No match"
+      updated_cart << found_item
     end
-    binding.pry
+    # binding.pry
     coupon_index += 1
   end
+  updated_cart
+  binding.pry
 end
 
 def apply_clearance(cart)
