@@ -34,20 +34,17 @@ def consolidate_cart(cart)
     #       new `Array` will have its `:count` increased
   i = 0
   result = []
-  while i < cart.length do
-    r_i = 0
-    # binding.pry
-    while r_i < result.size do
-      if !result[r_i][:item]
-        result[r_i] = cart[i]
-      else
-        result[r_i][:count] += 1
-      end
-      # binding.pry
-      r_i += 1
+  while i < cart.length
+    current_hash = cart[i]
+    current_name = cart[i][:item]
+    if result.empty?
+      result << current_hash
     end
-    i += 1
-    result
+    r = 0
+    while r < result.length do
+    
+    end
+    binding.pry
   end
   
 end
