@@ -42,7 +42,7 @@ def consolidate_cart(cart)
     else # if the cart isn't empty do the following ...
       r = 0
       while r < result.length do
-        if result[r][:count] == current_name #if the current_name is the same as the [r] 
+        if result[r][:item] == current_name #if the current_name is the same as the [r] 
           result[r][:count] += 1 # then add one
         else
           result << cart[i]
