@@ -36,17 +36,22 @@ def consolidate_cart(cart)
   result = []
   while i < cart.length
     current_hash = cart[i]
+    current_hash[:count] = 1
     current_name = cart[i][:item]
     if result.empty?
       result << current_hash
     end
     r = 0
     while r < result.length do
-    
+      binding.pry
+      if result[r][:item] == current_name
+        result[r][:count] += 1
+      else
+        result << current_hash
+      end
       r += 1
     end
-    binding.pry
-  i += 1  
+    i += 1  
   end
   
 end
