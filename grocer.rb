@@ -2,11 +2,11 @@ require 'pry'
 
 	items =     [
       {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      {:item => "TEMPEH", :price => 3.00, :clearance => true},
       {:item => "AVOCADO", :price => 3.00, :clearance => true},
       {:item => "KALE", :price => 3.00, :clearance => false},
       {:item => "CHEESE", :price => 6.50, :clearance => false},
       {:item => "BEER", :price => 13.00, :clearance => false},
-      {:item => "TEMPEH", :price => 3.00, :clearance => true},
       {:item => "CHEESE", :price => 6.50, :clearance => false},
     ]
 	
@@ -63,7 +63,6 @@ def consolidate_cart(cart)
   i += 1
   end
  result
- binding.pry
 end
 
 # consolidate_cart(items)
@@ -82,7 +81,12 @@ def apply_coupons(cart, coupons)
   
   # if there isn't a coupon just pass it through
   consolidated_cart = consolidate_cart(cart)
+  coupon_i = 0
+  result = []
+  while coupon_i < coupons.length do
   
+  end
+  # binding.pry
 end
 
 apply_coupons(items, coupons)
