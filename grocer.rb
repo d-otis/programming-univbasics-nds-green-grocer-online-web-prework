@@ -97,12 +97,18 @@ def apply_coupons(cart, coupons)
       result << item          # pass the item along
     else
       remainder_item = {}
+      discounted_item = {}
+      
       coupon_num = coupon_data[:num]
       item_count = item[:count]
-      # remainder_item = item
-      discounted_item = item
       remainder = item_count % coupon_num
+      
+      remainder_item[:item] = item[:item]
       remainder_item[:count] = remainder
+      remainder_item[:price] = item[:price]
+      remainder_item[:clearance] = item[:clearance]
+      result << remainder_item
+      
       discounted_item[:count] = coupon_num
       discounted_item[:item] = "#{discounted_item[:item]} W/COUPON"
     end
