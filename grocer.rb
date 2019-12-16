@@ -23,14 +23,6 @@ require 'pry'
 
 
 def find_item_by_name_in_collection(name, collection)
-  # Implement me first!
-  # * Arguments:
-  #   * `String`: name of the item to find
-  #   * `Array`: a collection of items to search through
-  # * Returns:
-  #   * `nil` if no match is found
-  #   * the matching `Hash` if a match is found between the desired name and a given 
-  #     `Hash`'s :item key
   i = 0
   while i < collection.length do
     if collection[i][:item] == name
@@ -42,32 +34,24 @@ def find_item_by_name_in_collection(name, collection)
 end
 
 def consolidate_cart(cart)
-  # REMEMBER: This returns a new Array that represents the cart. Don't merely
-  # change `cart` (i.e. mutate) it. It's easier to return a new thing.
-    #   * Arguments:
-    #   * `Array`: a collection of item Hashes
-    # * Returns:
-    #   * a ***new*** `Array` where every ***unique*** item in the original is present
-    #     * Every item in this new `Array` should have a `:count` attribute
-    #     * Every item's `:count` will be _at least_ one
-    #     * Where multiple instances of a given item are seen, the instance in the
-    #       new `Array` will have its `:count` increased
   i = 0
-  result = []
+  new_cart = []
   while i < cart.length do
-    name = cart[i][:item]
-    cart[i][:count] = 1
-    if result.empty?
-      result << cart[i]
-    elsif find_item_by_name_in_collection(name, result)
-      repeat_item = find_item_by_name_in_collection(name, result)
-      repeat_item[:count] += 1
+    new_cart_item = find_item_by_name_in_collection(cart[i][:item], new_cart)
+    if new_cart_item
+      new_cart_item[:count] += 1
     else
-      result << cart[i]
+      new_cart_item = {
+        :item => cart[i][:item],
+        :price => cart[i][:price],
+        :clearance => cart[i][:clearance],
+        :count => 1
+      }
+      new_cart << new_cart_item
     end
-  i += 1
+    i += 1
   end
- result
+ new_cart
 end
 
 # consolidate_cart(items)
@@ -109,7 +93,7 @@ def apply_coupons(cart, coupons)
         result << item
       end
     end
-    binding.pry
+    # binding.pry
     i +=1
   end
   result
