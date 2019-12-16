@@ -1,10 +1,11 @@
 require 'pry'
 
 	items =     [
-      {:item => "AVOCADO", :price => 3.00, :clearance => true},
-      {:item => "AVOCADO", :price => 3.00, :clearance => true},
-      {:item => "AVOCADO", :price => 3.00, :clearance => true},
       {:item => "KALE", :price => 3.00, :clearance => false},
+      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      
       
       {:item => "TEMPEH", :price => 3.00, :clearance => true},
       
@@ -65,6 +66,7 @@ def consolidate_cart(cart)
     end
   i += 1
   end
+  # binding.pry
  result
 end
 
@@ -83,28 +85,30 @@ def apply_coupons(cart, coupons)
   #     described below.
   
   consolidated_cart = consolidate_cart(cart)
+  # binding.pry
   i = 0
   result = []
   while i < consolidated_cart.length do
     item = consolidated_cart[i]
     item_name = item[:item]
     coupon_data = find_item_by_name_in_collection(item_name, coupons)
+    # binding.pry
     if !coupon_data           # if a matching coupon isn't found
       result << item          # pass the item along
     else
       coupon_num = coupon_data[:num]
       item_count = item[:count]
-      if coupon_num - item_count == 0
-        item[:price] = coupon_data[:cost] / coupon_data[:num]
-        item[:item] = "#{item[:item]} W/COUPON"
-        result << item
-      else #there is a remainder
-        diff = item_count - coupon_num
-        item[:count] = diff
-        result << item
-      end
+      diff = item_count - coupon_num
+      standard_item = item
+      standard_item[:count] = diff
+      binding.pry
+      item[:price] = coupon_data[:cost] / coupon_data[:num]
+      item[:item] = "#{item[:item]} W/COUPON"
+      result << item
+      result << standard_item
+
     end
-    binding.pry
+    
     i +=1
   end
   result
