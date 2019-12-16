@@ -57,49 +57,50 @@ end
 # consolidate_cart(items)
 
 def apply_coupons(cart, coupons)
-  consolidated_cart = consolidate_cart(cart)
-  i = 0
-  result = []
-  while i < consolidated_cart.length do
-    item = consolidated_cart[i]
-    item_name = item[:item]
-    item_count = item[:count]
+  # consolidated_cart = consolidate_cart(cart)
+  # binding.pry
+  counter = 0
+  while counter < coupons.length do
     
-    if !find_item_by_name_in_collection(item_name, coupons)                                     
-      result << item
-    else
-      coupon_data = find_item_by_name_in_collection(item_name, coupons)
-      coupon_num = coupon_data[:num]
-      
-      if item_count >= coupon_num
-        coupon_num = coupon_data[:num]
-        remainder_item = {}
-        discounted_item = {}
-        
-        remainder = item_count % coupon_num
-        
-        remainder_item[:item] = item[:item]
-        remainder_item[:price] = item[:price]
-        remainder_item[:clearance] = item[:clearance]
-        remainder_item[:count] = remainder
-        result << remainder_item
-        
-        discounted_item[:item] = "#{item[:item]} W/COUPON"
-        discounted_item[:price] = coupon_data[:cost] / coupon_num
-        discounted_item[:clearance] = item[:clearance]
-        discounted_item[:count] = coupon_num
-        result << discounted_item
+    # cart item in question if present, else nil
+    cart_item = find_item_by_name_in_collection(coupons[counter][:item], cart) 
+    
+    # the string that will replace item name
+    couponed_item_name = "#{coupons[counter][:item]} W/COUPON" 
+    
+    # checks if prev couponed items in cart, else nil
+    cart_item_with_coupon = find_item_by_name_in_collection(couponed_item_name, cart) 
+    
+    # binding.pry
+    # if cart_item present AND cart_item count is >= to coupon num execute below
+    if cart_item && cart_item[:count] >= coupons[counter][:num]
+      # if couponed item is present in cart
+      if cart_item_with_coupon
+        # add coupon num to item count num
+        cart_item_with_coupon[:count] += coupons[counter][:num]
+        # subtract coupon num from item count num
+        cart_item[:count] -= coupons[counter][:num]
+        # if couponed item is NOT present in cart 
       else
-        result << item
+        # create new cart_item_with_coupon with the following key/val pairs
+        cart_item_with_coupon = {
+          :item => couponed_item_name,
+          :price => coupons[counter][:cost] / coupons[counter][:num],
+          :clearance => cart_item[:clearance],
+          :count => coupons[counter][:num]
+        }
+        # add it to the cart
+        cart << cart_item_with_coupon
+        # subtract from uncouponed item by whatever coupon num is
+        cart_item[:count] -= coupons[counter][:num]
       end
     end
     # binding.pry
-    i +=1
+    counter += 1
   end
-  result
+  # binding.pry
+ cart
 end
-
-# apply_coupons(items, coupons)
 
 def apply_clearance(cart)
   # Consult README for inputs and outputs
