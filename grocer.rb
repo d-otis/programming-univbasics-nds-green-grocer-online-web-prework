@@ -1,5 +1,22 @@
 require 'pry'
 
+	items =     [
+      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      {:item => "KALE", :price => 3.00, :clearance => false},
+      {:item => "CHEESE", :price => 6.50, :clearance => false},
+      {:item => "BEER", :price => 13.00, :clearance => false},
+      {:item => "TEMPEH", :price => 3.00, :clearance => true},
+      {:item => "CHEESE", :price => 6.50, :clearance => false},
+    ]
+	
+	coupons = 	[
+		{:item => "AVOCADO", :num => 2, :cost => 5.00},
+		{:item => "BEER", :num => 2, :cost => 20.00},
+		{:item => "CHEESE", :num => 3, :cost => 15.00}
+	]
+
+
 def find_item_by_name_in_collection(name, collection)
   # Implement me first!
   # * Arguments:
@@ -46,7 +63,10 @@ def consolidate_cart(cart)
   i += 1
   end
  result
+ binding.pry
 end
+
+# consolidate_cart(items)
 
 def apply_coupons(cart, coupons)
   # Consult README for inputs and outputs
@@ -59,36 +79,13 @@ def apply_coupons(cart, coupons)
   #   * A ***new*** `Array`. Its members will be a mix of the item `Hash`es and,
   #     where applicable, the "ITEM W/COUPON" `Hash`. Rules for application are
   #     described below.
+  
+  # if there isn't a coupon just pass it through
   consolidated_cart = consolidate_cart(cart)
-  coupon_index = 0
-  updated_cart = []
-  while coupon_index < coupons.length do
-    coupon_name = coupons[coupon_index][:item]
-    coupon_number = coupons[coupon_index][:num]
-    found_item = find_item_by_name_in_collection(coupon_name, consolidated_cart)
-    found_item_name = found_item[:item]
-    found_item_count = found_item[:count]
-    if found_item_name == coupon_name
-      if coupon_number <= found_item_count
-        msg = "coupon can be applied"
-        leftover_in_cart = found_item_count - coupon_number
-        if leftover_in_cart != 0
-          found_item[:count] = leftover_in_cart
-        end
-        found_item[:price] = found_item_count / coupon_number
-        updated_cart << found_item
-      else
-        updated_cart << found_item
-      end
-    else
-      updated_cart << found_item
-    end
-    # binding.pry
-    coupon_index += 1
-  end
-  updated_cart
-  binding.pry
+  
 end
+
+apply_coupons(items, coupons)
 
 def apply_clearance(cart)
   # Consult README for inputs and outputs
