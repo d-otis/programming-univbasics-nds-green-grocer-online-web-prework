@@ -127,7 +127,7 @@ def checkout(cart, coupons)
   total = 0.0
   while i < cart_with_clearance_applied.length do
     total += cart_with_clearance_applied[i][:price]
-  i += 1
+    i += 1
   end
   total
 end
