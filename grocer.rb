@@ -99,25 +99,17 @@ end
 
 def apply_clearance(cart)
   i = 0
-  new_cart =[]
   while i < cart.length do
     if cart[i][:clearance]
-      updated_item = {
-        :item => cart[i][:item],
-        :price => (cart[i][:price] * 0.8).round(2),
-        :clearance => true,
-        :count => cart[i][:count]
-      }
-      new_cart << updated_item
-    else
-      new_cart << cart[i]
+      cart[i][:price] = (cart[i][:price] * 0.8).round(2)
     end
     i += 1
   end
-  new_cart
+  cart
 end
 
 def checkout(cart, coupons)
+  # binding.pry
   # Consult README for inputs and outputs
   #
   # This method should call
@@ -127,4 +119,18 @@ def checkout(cart, coupons)
   #
   # BEFORE it begins the work of calculating the total (or else you might have
   # some irritated customers
+  consolidated_cart = consolidate_cart(cart)
+  couponed_cart = apply_coupons(consolidated_cart, coupons)
+  final_cart = apply_clearance(couponed_cart)
+  # binding.pry
+  i = 0
+  total = 0.0
+  while i < final_cart.length do
+    total += final_cart[i][:price] * final_cart[i][:count]
+    i += 1
+  end
+  if total > 100
+    total = (total * 0.9).round(2)
+  end
+total
 end
