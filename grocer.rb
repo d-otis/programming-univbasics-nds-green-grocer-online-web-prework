@@ -1,10 +1,13 @@
 require 'pry'
 
 	items =     [
+      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      {:item => "AVOCADO", :price => 3.00, :clearance => true},
       {:item => "KALE", :price => 3.00, :clearance => false},
-      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      
       {:item => "TEMPEH", :price => 3.00, :clearance => true},
-      {:item => "AVOCADO", :price => 3.00, :clearance => true},
+      
       {:item => "CHEESE", :price => 6.50, :clearance => false},
       {:item => "BEER", :price => 13.00, :clearance => false},
       {:item => "CHEESE", :price => 6.50, :clearance => false},
@@ -86,12 +89,25 @@ def apply_coupons(cart, coupons)
     item = consolidated_cart[i]
     item_name = item[:item]
     coupon_data = find_item_by_name_in_collection(item_name, coupons)
-    if !coupon_data           # if a coupon isn't found for the currently iterated over item
+    if !coupon_data           # if a matching coupon isn't found
       result << item          # pass the item along
+    else
+      coupon_num = coupon_data[:num]
+      item_count = item[:count]
+      if coupon_num - item_count == 0
+        item[:price] = coupon_data[:cost] / coupon_data[:num]
+        item[:item] = "#{item[:item]} W/COUPON"
+        result << item
+      else #there is a remainder
+        diff = item_count - coupon_num
+        item[:count] = diff
+        result << item
+      end
     end
     binding.pry
     i +=1
   end
+  result
 end
 
 apply_coupons(items, coupons)
