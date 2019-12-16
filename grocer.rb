@@ -125,6 +125,6 @@ def checkout(cart, coupons)
   # binding.pry
   i = 0
   total = 0.0
-  while i < cart_with_clearance_applied.length
+  while i < final_cart.length
 
 end
