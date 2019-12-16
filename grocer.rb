@@ -96,17 +96,14 @@ def apply_coupons(cart, coupons)
     if !coupon_data           # if a matching coupon isn't found
       result << item          # pass the item along
     else
-      # coupon_num = coupon_data[:num]
-      # item_count = item[:count]
-      # diff = item_count - coupon_num
-      # standard_item = item
-      # standard_item[:count] = diff
-      # binding.pry
-      # item[:price] = coupon_data[:cost] / coupon_data[:num]
-      # item[:item] = "#{item[:item]} W/COUPON"
-      # result << item
-      # result << standard_item
-
+      coupon_num = coupon_data[:num]
+      item_count = item[:count]
+      remainder_item = item
+      discounted_item = item
+      discounted_item[:count] = coupon_num
+      discounted_item[:item] = "#{discounted_item[:item]} W/COUPON"
+      remainder = item_count % coupon_num
+      remainder_item[:count] = remainder
     end
     binding.pry
     i +=1
