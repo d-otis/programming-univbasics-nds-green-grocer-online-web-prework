@@ -93,11 +93,12 @@ def apply_coupons(cart, coupons)
     item_name = item[:item]
     item_count = item[:count]
     coupon_data = find_item_by_name_in_collection(item_name, coupons)
-    coupon_num = coupon_data[:num]
+    
     # binding.pry
-    if !coupon_data || coupon_num < item_count           # if a matching coupon isn't found
+    if !coupon_data                                     # if a matching coupon isn't found
       result << item                                     # pass the item along
-    else
+    elsif item_count >= coupon_num
+      coupon_num = coupon_data[:num]
       remainder_item = {}
       discounted_item = {}
       
@@ -114,6 +115,8 @@ def apply_coupons(cart, coupons)
       discounted_item[:clearance] = item[:clearance]
       discounted_item[:count] = coupon_num
       result << discounted_item
+    else
+      result << item
       
     end
     binding.pry
