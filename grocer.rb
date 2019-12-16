@@ -91,26 +91,30 @@ def apply_coupons(cart, coupons)
   while i < consolidated_cart.length do
     item = consolidated_cart[i]
     item_name = item[:item]
+    item_count = item[:count]
     coupon_data = find_item_by_name_in_collection(item_name, coupons)
+    coupon_num = coupon_data[:num]
     # binding.pry
-    if !coupon_data           # if a matching coupon isn't found
-      result << item          # pass the item along
+    if !coupon_data || coupon_num < item_count           # if a matching coupon isn't found
+      result << item                                     # pass the item along
     else
       remainder_item = {}
       discounted_item = {}
       
-      coupon_num = coupon_data[:num]
-      item_count = item[:count]
       remainder = item_count % coupon_num
       
       remainder_item[:item] = item[:item]
-      remainder_item[:count] = remainder
       remainder_item[:price] = item[:price]
       remainder_item[:clearance] = item[:clearance]
+      remainder_item[:count] = remainder
       result << remainder_item
       
+      discounted_item[:item] = "#{item[:item]} W/COUPON"
+      discounted_item[:price] = coupon_data[:cost] / coupon_num
+      discounted_item[:clearance] = item[:clearance]
       discounted_item[:count] = coupon_num
-      discounted_item[:item] = "#{discounted_item[:item]} W/COUPON"
+      result << discounted_item
+      
     end
     binding.pry
     i +=1
