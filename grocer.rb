@@ -12,6 +12,7 @@ require 'pry'
       {:item => "CHEESE", :price => 6.50, :clearance => false},
       {:item => "BEER", :price => 13.00, :clearance => false},
       {:item => "CHEESE", :price => 6.50, :clearance => false},
+      {:item => "CHEESE", :price => 6.50, :clearance => false}
     ]
 	
 	coupons = 	[
@@ -92,32 +93,35 @@ def apply_coupons(cart, coupons)
     item = consolidated_cart[i]
     item_name = item[:item]
     item_count = item[:count]
-    coupon_data = find_item_by_name_in_collection(item_name, coupons)
-    
+    # coupon_data = find_item_by_name_in_collection(item_name, coupons)
     # binding.pry
-    if !coupon_data                                     # if a matching coupon isn't found
-      result << item                                     # pass the item along
-    elsif item_count >= coupon_num
-      coupon_num = coupon_data[:num]
-      remainder_item = {}
-      discounted_item = {}
-      
-      remainder = item_count % coupon_num
-      
-      remainder_item[:item] = item[:item]
-      remainder_item[:price] = item[:price]
-      remainder_item[:clearance] = item[:clearance]
-      remainder_item[:count] = remainder
-      result << remainder_item
-      
-      discounted_item[:item] = "#{item[:item]} W/COUPON"
-      discounted_item[:price] = coupon_data[:cost] / coupon_num
-      discounted_item[:clearance] = item[:clearance]
-      discounted_item[:count] = coupon_num
-      result << discounted_item
-    else
+    if !find_item_by_name_in_collection(item_name, coupons)                                     
       result << item
+    else
+      coupon_data = find_item_by_name_in_collection(item_name, coupons)
+      coupon_num = coupon_data[:num]
       
+      if item_count >= coupon_num
+        coupon_num = coupon_data[:num]
+        remainder_item = {}
+        discounted_item = {}
+        
+        remainder = item_count % coupon_num
+        
+        remainder_item[:item] = item[:item]
+        remainder_item[:price] = item[:price]
+        remainder_item[:clearance] = item[:clearance]
+        remainder_item[:count] = remainder
+        result << remainder_item
+        
+        discounted_item[:item] = "#{item[:item]} W/COUPON"
+        discounted_item[:price] = coupon_data[:cost] / coupon_num
+        discounted_item[:clearance] = item[:clearance]
+        discounted_item[:count] = coupon_num
+        result << discounted_item
+      else
+        result << item
+      end
     end
     binding.pry
     i +=1
