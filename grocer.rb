@@ -121,7 +121,10 @@ def checkout(cart, coupons)
   # some irritated customers
   consolidated_cart = consolidate_cart(cart)
   cart_with_coupons_applied = apply_coupons(consolidated_cart, coupons)
-  cart_with_clearance_applied = apply_clearance(cart_with_coupons_applied)
-  binding.pry
+  final_cart = apply_clearance(cart_with_coupons_applied)
+  # binding.pry
+  i = 0
+  total = 0.0
+  while i < cart_with_clearance_applied.length
 
 end
