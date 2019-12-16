@@ -1,10 +1,10 @@
 require 'pry'
 
 	items =     [
+      {:item => "KALE", :price => 3.00, :clearance => false},
       {:item => "AVOCADO", :price => 3.00, :clearance => true},
       {:item => "TEMPEH", :price => 3.00, :clearance => true},
       {:item => "AVOCADO", :price => 3.00, :clearance => true},
-      {:item => "KALE", :price => 3.00, :clearance => false},
       {:item => "CHEESE", :price => 6.50, :clearance => false},
       {:item => "BEER", :price => 13.00, :clearance => false},
       {:item => "CHEESE", :price => 6.50, :clearance => false},
@@ -79,14 +79,19 @@ def apply_coupons(cart, coupons)
   #     where applicable, the "ITEM W/COUPON" `Hash`. Rules for application are
   #     described below.
   
-  # if there isn't a coupon just pass it through
   consolidated_cart = consolidate_cart(cart)
-  coupon_i = 0
+  i = 0
   result = []
-  while coupon_i < coupons.length do
-  
+  while i < consolidated_cart.length do
+    item = consolidated_cart[i]
+    item_name = item[:item]
+    coupon_data = find_item_by_name_in_collection(item_name, coupons)
+    if !coupon_data           # if a coupon isn't found for the currently iterated over item
+      result << item          # pass the item along
+    end
+    binding.pry
+    i +=1
   end
-  # binding.pry
 end
 
 apply_coupons(items, coupons)
