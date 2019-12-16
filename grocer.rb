@@ -57,8 +57,6 @@ end
 # consolidate_cart(items)
 
 def apply_coupons(cart, coupons)
-  # consolidated_cart = consolidate_cart(cart)
-  # binding.pry
   counter = 0
   while counter < coupons.length do
     
@@ -71,7 +69,6 @@ def apply_coupons(cart, coupons)
     # checks if prev couponed items in cart, else nil
     cart_item_with_coupon = find_item_by_name_in_collection(couponed_item_name, cart) 
     
-    # binding.pry
     # if cart_item present AND cart_item count is >= to coupon num execute below
     if cart_item && cart_item[:count] >= coupons[counter][:num]
       # if couponed item is present in cart
@@ -95,17 +92,29 @@ def apply_coupons(cart, coupons)
         cart_item[:count] -= coupons[counter][:num]
       end
     end
-    # binding.pry
     counter += 1
   end
-  # binding.pry
  cart
 end
 
 def apply_clearance(cart)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+  i = 0
+  new_cart =[]
+  while i < cart.length do
+    if cart[i][:clearance]
+      updated_item = {
+        :item => cart[i][:item],
+        :price => (cart[i][:price] * 0.8).round(2),
+        :clearance => true,
+        :count => cart[i][:count]
+      }
+      new_cart << updated_item
+    else
+      new_cart << cart[i]
+    end
+    i += 1
+  end
+  new_cart
 end
 
 def checkout(cart, coupons)
