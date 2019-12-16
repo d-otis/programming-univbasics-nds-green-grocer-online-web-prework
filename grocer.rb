@@ -67,34 +67,20 @@ def consolidate_cart(cart)
     end
   i += 1
   end
-  # binding.pry
  result
 end
 
 # consolidate_cart(items)
 
 def apply_coupons(cart, coupons)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
-  #   * Arguments:
-  #   * `Array`: a collection of item `Hash`es
-  #   * `Array`: a collection of coupon `Hash`es
-  # * Returns:
-  #   * A ***new*** `Array`. Its members will be a mix of the item `Hash`es and,
-  #     where applicable, the "ITEM W/COUPON" `Hash`. Rules for application are
-  #     described below.
-  
   consolidated_cart = consolidate_cart(cart)
-  # binding.pry
   i = 0
   result = []
   while i < consolidated_cart.length do
     item = consolidated_cart[i]
     item_name = item[:item]
     item_count = item[:count]
-    # coupon_data = find_item_by_name_in_collection(item_name, coupons)
-    # binding.pry
+    
     if !find_item_by_name_in_collection(item_name, coupons)                                     
       result << item
     else
@@ -129,7 +115,7 @@ def apply_coupons(cart, coupons)
   result
 end
 
-apply_coupons(items, coupons)
+# apply_coupons(items, coupons)
 
 def apply_clearance(cart)
   # Consult README for inputs and outputs
